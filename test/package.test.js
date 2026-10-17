@@ -42,3 +42,14 @@ for (const file of ['landscape7.umd.js', 'landscape7.umd.min.js']) {
     assert.equal(ctx.Landscape7.version, pkg.version);
   });
 }
+
+test('React bundles export <Landscape7> and keep react and the core external', async () => {
+  const esm = await import('../dist/react.mjs');
+  assert.equal(esm.default, esm.Landscape7);
+  assert.equal(require('../dist/react.cjs').Landscape7.displayName, 'Landscape7');
+  for (const file of ['react.mjs', 'react.cjs']) {
+    const code = read(`../dist/${file}`);
+    assert.match(code, /["']landscape7["']/, `${file} imports the core by name`);
+    assert.doesNotMatch(code, /class Renderer/, `${file} does not bundle the core`);
+  }
+});

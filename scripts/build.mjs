@@ -23,7 +23,14 @@ const outputs = [
   { format: 'iife', outfile: 'dist/landscape7.umd.min.js', globalName: 'Landscape7', footer: { js: 'Landscape7=Landscape7.default;' }, minify: true, sourcemap: true }
 ];
 
-for (const o of outputs) {
+// React binding: react and the core stay external so the app supplies one copy of each.
+const reactCommon = { ...common, entryPoints: ['src/react.js'], external: ['react', 'landscape7'] };
+const reactOutputs = [
+  { ...reactCommon, format: 'esm', outfile: 'dist/react.mjs' },
+  { ...reactCommon, format: 'cjs', outfile: 'dist/react.cjs' }
+];
+
+for (const o of [...outputs, ...reactOutputs]) {
   await build({ ...common, ...o });
   const code = await readFile(o.outfile, 'utf8');
   await writeFile(o.outfile, code.replaceAll('__VERSION__', pkg.version));
@@ -31,4 +38,5 @@ for (const o of outputs) {
 
 // Same declarations for require() consumers (TypeScript resolves .d.cts for .cjs).
 await copyFile('types/index.d.ts', 'types/index.d.cts');
-console.log(`built ${pkg.name}@${pkg.version}: ${outputs.map((o) => o.outfile).join(', ')}`);
+await copyFile('types/react.d.ts', 'types/react.d.cts');
+console.log(`built ${pkg.name}@${pkg.version}: ${[...outputs, ...reactOutputs].map((o) => o.outfile).join(', ')}`);

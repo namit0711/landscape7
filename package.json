@@ -30,6 +30,16 @@
         "default": "./dist/landscape7.cjs"
       }
     },
+    "./react": {
+      "import": {
+        "types": "./types/react.d.ts",
+        "default": "./dist/react.mjs"
+      },
+      "require": {
+        "types": "./types/react.d.cts",
+        "default": "./dist/react.cjs"
+      }
+    },
     "./schema.json": "./schema/landscape7.schema.json",
     "./package.json": "./package.json"
   },
@@ -48,10 +58,21 @@
     "demo": "npm run build && npx --yes serve -l 8080 .",
     "prepublishOnly": "npm test && npm run typecheck"
   },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@types/react": "^19.3.0",
     "ajv": "^8.17.1",
     "esbuild": "^0.25.0",
     "jsdom": "^26.0.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "typescript": "^5.6.0"
   }
 }
