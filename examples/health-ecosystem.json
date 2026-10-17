@@ -1,0 +1,190 @@
+{
+  "$schema": "../schema/landscape7.schema.json",
+  "canvas": {
+    "width": 1000,
+    "scaleToFit": true,
+    "padding": 10,
+    "gap": 12,
+    "background": "#ffffff",
+    "fontFamily": "Calibri, Carlito, Arial, sans-serif"
+  },
+  "rowSync": "section",
+  "hover": { "leaf": { "brightness": 0.96, "shadow": "0 2px 6px rgba(0, 0, 0, 0.2)" } },
+
+  "layers": {
+    "1": {
+      "borderStyle": "none",
+      "background": "transparent",
+      "padding": 0,
+      "gap": 12,
+      "justify": "start"
+    },
+    "2": {
+      "borderStyle": "none",
+      "background": "transparent",
+      "fontColor": "#262626",
+      "fontWeight": 400,
+      "verticalAlign": "middle",
+      "padding": "8px 12px",
+      "gap": 10,
+      "justify": "stretch"
+    },
+    "3": {
+      "borderStyle": "solid",
+      "borderWidth": 1.5,
+      "background": "transparent",
+      "fontSize": 13,
+      "fontColor": "#1f1f1f",
+      "lineHeight": 1.15,
+      "height": 32,
+      "padding": "2px 8px"
+    }
+  },
+
+  "styles": {
+    "row-label": { "fontSize": 15, "padding": 0, "hover": false },
+
+    "band-stakeholders": { "padding": "0 12px" },
+    "band-capabilities": { "background": "#f4d9f0" },
+    "band-applications": { "background": "#fbe5d6" },
+    "band-integration": { "background": "#d9d9d9" },
+    "band-data": { "background": "#d8eecf" },
+    "band-infrastructure": { "background": "#cfe8f5" },
+
+    "stakeholder": { "background": "#ffffff", "borderColor": "#7f7f7f" },
+    "capability": { "borderColor": "#7e3f8f" },
+    "application": { "borderColor": "#c55a11" },
+    "integration": { "borderColor": "#404040" },
+    "data-source": { "borderColor": "#3a7d22" },
+    "infrastructure": { "borderColor": "#2e75b6" },
+    "small-text": { "fontSize": 11 }
+  },
+
+  "nodes": [
+    {
+      "id": "stakeholders",
+      "row": 1,
+      "children": [
+        { "title": "Stakeholders", "row": 1, "width": 120, "preset": "row-label" },
+        {
+          "row": 1,
+          "grow": 1,
+          "preset": "band-stakeholders",
+          "children": [
+            { "title": "Individuals &\nfamilies", "row": 1, "preset": "stakeholder" },
+            { "title": "Developers &\nmanufacturers", "row": 1, "preset": "stakeholder" },
+            { "title": "Policymakers", "row": 1, "preset": "stakeholder" },
+            { "title": "Care providers", "row": 1, "preset": "stakeholder" },
+            { "title": "Public health\nprofessionals", "row": 1, "preset": "stakeholder" },
+            { "title": "Public &\nprivate payors", "row": 1, "preset": "stakeholder" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "capabilities",
+      "row": 2,
+      "children": [
+        { "title": "Capabilities", "row": 1, "width": 120, "preset": "row-label" },
+        {
+          "row": 1,
+          "grow": 1,
+          "preset": "band-capabilities",
+          "children": [
+            { "title": "Cont. learning /\ninnovation", "row": 1, "preset": "capability" },
+            { "title": "Data security/\nprivacy", "row": 1, "preset": "capability" },
+            { "title": "Industry\ncoordination", "row": 1, "preset": "capability" },
+            { "title": "Seamless\ninteroperability", "row": 1, "preset": "capability" },
+            { "title": "Patient-centered\nexperience", "row": 1, "preset": ["capability", "small-text"] }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "applications",
+      "row": 3,
+      "children": [
+        { "title": "Applications", "row": 1, "width": 120, "preset": "row-label" },
+        {
+          "row": 1,
+          "grow": 1,
+          "preset": "band-applications",
+          "children": [
+            { "title": "EHR", "row": 1, "preset": "application" },
+            { "title": "Patient\nportal", "row": 1, "preset": "application" },
+            { "title": "Mobile\napps", "row": 1, "preset": "application" },
+            { "title": "Analytics\ndashboards", "row": 1, "preset": "application" },
+            { "title": "Decision\nsupport tools", "row": 1, "preset": ["application", "small-text"] },
+            { "title": "Pop. health\nmgmt", "row": 1, "preset": "application" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "integration",
+      "row": 4,
+      "children": [
+        { "title": "Integration/API", "row": 1, "width": 120, "preset": "row-label" },
+        {
+          "row": 1,
+          "grow": 1,
+          "preset": "band-integration",
+          "children": [
+            { "title": "FHIR services", "row": 1, "preset": "integration" },
+            { "title": "Messaging\nbuses", "row": 1, "preset": "integration" },
+            { "title": "API gateways", "row": 1, "preset": "integration" },
+            { "title": "Identity/\naccess mgmt", "row": 1, "preset": "integration" },
+            { "title": "AI MCP\nservers", "row": 1, "preset": "integration" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "data-sources",
+      "row": 5,
+      "children": [
+        { "title": "Data Sources", "row": 1, "width": 120, "preset": "row-label" },
+        {
+          "row": 1,
+          "grow": 1,
+          "preset": "band-data",
+          "style": { "gap": 7 },
+          "children": [
+            { "title": "Social\ndet.", "row": 1, "preset": "data-source" },
+            { "title": "Env.\nfactors", "row": 1, "preset": "data-source" },
+            { "title": "Genetic\nprofiles", "row": 1, "preset": "data-source" },
+            { "title": "Personal\nhealth", "row": 1, "preset": ["data-source", "small-text"] },
+            { "title": "EHRs", "row": 1, "preset": "data-source" },
+            { "title": "ADT\ntrans.", "row": 1, "preset": "data-source" },
+            { "title": "Billing/\nclaims", "row": 1, "preset": "data-source" },
+            { "title": "Med/\nprescr.", "row": 1, "preset": "data-source" },
+            { "title": "Image\narchive", "row": 1, "preset": "data-source" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "infrastructure",
+      "row": 6,
+      "children": [
+        { "title": "Infrastructure", "row": 1, "width": 120, "preset": "row-label" },
+        {
+          "row": 1,
+          "grow": 1,
+          "preset": "band-infrastructure",
+          "children": [
+            { "title": "Cloud/on-prem\ncompute", "row": 1, "preset": "infrastructure" },
+            { "title": "Networks", "row": 1, "preset": "infrastructure" },
+            { "title": "Security services", "row": 1, "preset": "infrastructure" },
+            { "title": "DevOps pipelines", "row": 1, "preset": "infrastructure" }
+          ]
+        }
+      ]
+    }
+  ]
+}

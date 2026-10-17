@@ -1,0 +1,57 @@
+{
+  "name": "landscape7",
+  "version": "1.0.0",
+  "description": "Render capability / solution landscape diagrams from JSON: up to 3 nested layers, per-layer styling and row-synchronised heights. Zero dependencies.",
+  "keywords": [
+    "landscape",
+    "capability-map",
+    "architecture-diagram",
+    "solution-landscape",
+    "diagram",
+    "json",
+    "visualization"
+  ],
+  "license": "MIT",
+  "author": "Nam Do",
+  "type": "module",
+  "main": "./dist/landscape7.cjs",
+  "module": "./dist/landscape7.mjs",
+  "types": "./types/index.d.ts",
+  "unpkg": "./dist/landscape7.umd.min.js",
+  "jsdelivr": "./dist/landscape7.umd.min.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/landscape7.mjs"
+      },
+      "require": {
+        "types": "./types/index.d.cts",
+        "default": "./dist/landscape7.cjs"
+      }
+    },
+    "./schema.json": "./schema/landscape7.schema.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "types",
+    "schema",
+    "examples",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/build.mjs && node --test \"test/*.test.js\"",
+    "typecheck": "tsc -p test/tsconfig.json",
+    "demo": "npm run build && npx --yes serve -l 8080 .",
+    "prepublishOnly": "npm test && npm run typecheck"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "esbuild": "^0.25.0",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.6.0"
+  }
+}

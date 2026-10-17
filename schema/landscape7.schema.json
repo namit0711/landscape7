@@ -1,0 +1,511 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unpkg.com/landscape7/schema/landscape7.schema.json",
+  "title": "landscape7 data",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "canvas": {
+      "$ref": "#/definitions/canvas"
+    },
+    "rowSync": {
+      "$ref": "#/definitions/rowSync"
+    },
+    "hover": {
+      "$ref": "#/definitions/hover"
+    },
+    "layers": {
+      "description": "Per-layer styles keyed \"1\", \"2\", \"3\" or an array [layer1, layer2, layer3].",
+      "oneOf": [
+        {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/style"
+          }
+        },
+        {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/definitions/style"
+          }
+        }
+      ]
+    },
+    "styles": {
+      "description": "Named style presets referenced by node.preset.",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/style"
+      }
+    },
+    "nodes": {
+      "description": "Layer-1 nodes.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/node1"
+      }
+    }
+  },
+  "definitions": {
+    "length": {
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "rowSync": {
+      "enum": [
+        "parent",
+        "section",
+        "global"
+      ]
+    },
+    "justify": {
+      "enum": [
+        "start",
+        "left",
+        "center",
+        "end",
+        "right",
+        "space-between",
+        "space-around",
+        "space-evenly",
+        "stretch"
+      ]
+    },
+    "fontStyle": {
+      "enum": [
+        "normal",
+        "italic",
+        "oblique"
+      ]
+    },
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "width": {
+          "$ref": "#/definitions/length"
+        },
+        "scaleToFit": {
+          "type": "boolean"
+        },
+        "allowUpscale": {
+          "type": "boolean"
+        },
+        "padding": {
+          "$ref": "#/definitions/length"
+        },
+        "gap": {
+          "type": "number"
+        },
+        "rowGap": {
+          "type": "number"
+        },
+        "columnGap": {
+          "type": "number"
+        },
+        "background": {
+          "type": "string"
+        },
+        "fontFamily": {
+          "type": "string"
+        },
+        "justify": {
+          "$ref": "#/definitions/justify"
+        },
+        "wrap": {
+          "type": "boolean"
+        }
+      }
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "borderStyle": {
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ]
+        },
+        "borderColor": {
+          "type": "string"
+        },
+        "borderWidth": {
+          "$ref": "#/definitions/length"
+        },
+        "borderRadius": {
+          "$ref": "#/definitions/length"
+        },
+        "background": {
+          "type": "string"
+        },
+        "fontFamily": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fontSize": {
+          "$ref": "#/definitions/length"
+        },
+        "fontColor": {
+          "type": "string"
+        },
+        "fontWeight": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "fontStyle": {
+          "$ref": "#/definitions/fontStyle"
+        },
+        "lineHeight": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "textAlign": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "verticalAlign": {
+          "enum": [
+            "top",
+            "middle",
+            "bottom"
+          ]
+        },
+        "height": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "auto"
+            }
+          ]
+        },
+        "rowHeights": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "padding": {
+          "$ref": "#/definitions/length"
+        },
+        "gap": {
+          "type": "number"
+        },
+        "rowGap": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "columnGap": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "headerGap": {
+          "type": "number"
+        },
+        "justify": {
+          "$ref": "#/definitions/justify"
+        },
+        "rowJustify": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/justify"
+          }
+        },
+        "wrap": {
+          "type": "boolean"
+        },
+        "textFlow": {
+          "enum": [
+            "stack",
+            "inline"
+          ]
+        },
+        "titleMinWidth": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "subtitleFontSize": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "subtitleFontColor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subtitleFontWeight": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "subtitleFontStyle": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fontStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rowSync": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/rowSync"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hover": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/hover"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "nodeBase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "node",
+            "spacer"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "row": {
+          "type": "number"
+        },
+        "col": {
+          "type": "number"
+        },
+        "width": {
+          "$ref": "#/definitions/length"
+        },
+        "grow": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "auto"
+            }
+          ]
+        },
+        "preset": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "style": {
+          "$ref": "#/definitions/style"
+        },
+        "tooltip": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "className": {
+          "type": "string"
+        }
+      }
+    },
+    "node1": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/nodeBase"
+        }
+      ],
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node2"
+          }
+        }
+      }
+    },
+    "node2": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/nodeBase"
+        }
+      ],
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node3"
+          }
+        }
+      }
+    },
+    "node3": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/nodeBase"
+        }
+      ],
+      "not": {
+        "required": [
+          "children"
+        ]
+      },
+      "description": "Layer-3 nodes cannot have children (max 3 layers)."
+    },
+    "hoverEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "background": {
+          "type": "string"
+        },
+        "fontColor": {
+          "type": "string"
+        },
+        "subtitleFontColor": {
+          "type": "string"
+        },
+        "borderColor": {
+          "type": "string"
+        },
+        "brightness": {
+          "type": "number",
+          "minimum": 0
+        },
+        "filter": {
+          "type": "string"
+        },
+        "shadow": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "number",
+          "minimum": 0
+        },
+        "translateY": {
+          "type": "number"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "transition": {
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      }
+    },
+    "hoverSetting": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/hoverEffect"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "hover": {
+      "description": "true/false for both node kinds, or per kind. Defaults: leaf true, container false.",
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "leaf": {
+              "$ref": "#/definitions/hoverSetting"
+            },
+            "container": {
+              "$ref": "#/definitions/hoverSetting"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Landscape7 Demo</title>
+  <style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #eef1f5; color: #222; }
+    header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: #fff; border-bottom: 1px solid #d5dbe3; }
+    header h1 { font-size: 16px; margin: 0 auto 0 0; }
+    button, label.btn { font: inherit; font-size: 13px; padding: 6px 12px; border: 1px solid #b8c2cf; background: #fff; border-radius: 4px; cursor: pointer; }
+    button:hover, label.btn:hover { background: #f2f5f9; }
+    main { display: flex; gap: 12px; padding: 12px; align-items: flex-start; }
+    #stage { flex: 1; min-width: 0; background: #fff; padding: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+    #editor { display: none; flex: 0 0 420px; flex-direction: column; gap: 6px; }
+    #editor.open { display: flex; }
+    #editor textarea { height: calc(100vh - 140px); font: 12px/1.4 Consolas, monospace; padding: 8px; border: 1px solid #b8c2cf; resize: vertical; }
+    #status { font-size: 12px; color: #a33; min-height: 1em; }
+    #msg { padding: 40px; text-align: center; color: #555; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>landscape7 &mdash; demo</h1>
+    <select id="example" onchange="location.search = '?data=' + encodeURIComponent(this.value)">
+      <option value="health-ecosystem.json">Health ecosystem</option>
+    </select>
+    <label class="btn">Load JSON&hellip;<input id="file" type="file" accept=".json,application/json" hidden /></label>
+    <button id="toggle">Edit JSON</button>
+  </header>
+  <main>
+    <div id="stage"><div id="msg">Loading&hellip;</div></div>
+    <aside id="editor">
+      <textarea id="json" spellcheck="false"></textarea>
+      <div><button id="apply">Apply</button> <span id="status"></span></div>
+    </aside>
+  </main>
+
+  <script src="../dist/landscape7.umd.js"></script>
+  <script>
+    var stage = document.getElementById('stage');
+    var jsonBox = document.getElementById('json');
+    var status = document.getElementById('status');
+    var instance = null;
+
+    function show(data) {
+      jsonBox.value = JSON.stringify(data, null, 2);
+      if (instance) instance.update(data);
+      else instance = Landscape7.render(stage, data, {
+        onNodeClick: function (node) { console.log('clicked', node.title, node); }
+      });
+    }
+
+    // ?data=<file>.json picks the example (default: hls-landscape.json)
+    var dataFile = new URLSearchParams(location.search).get('data') || 'hls-landscape.json';
+    document.getElementById('example').value = dataFile;
+    fetch(dataFile)
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(show)
+      .catch(function () {
+        document.getElementById('msg').innerHTML =
+          'Could not fetch <code>' + dataFile + '</code> (browsers block fetch on <code>file://</code>).<br>' +
+          'Run a local server, e.g. <code>npx serve .</code> or <code>python -m http.server</code>, ' +
+          'or use <b>Load JSON&hellip;</b> above.';
+      });
+
+    document.getElementById('file').addEventListener('change', function (e) {
+      var f = e.target.files[0];
+      if (!f) return;
+      f.text().then(function (t) { show(JSON.parse(t)); }).catch(function (err) { alert('Invalid JSON: ' + err.message); });
+    });
+    document.getElementById('toggle').addEventListener('click', function () {
+      document.getElementById('editor').classList.toggle('open');
+    });
+    document.getElementById('apply').addEventListener('click', function () {
+      try { show(JSON.parse(jsonBox.value)); status.textContent = ''; }
+      catch (err) { status.textContent = err.message; }
+    });
+  </script>
+</body>
+</html>
